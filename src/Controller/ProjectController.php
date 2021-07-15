@@ -5,10 +5,20 @@ namespace App\Controller;
 use App\Entity\Project;
 use App\Form\ProjectType;
 use App\Repository\ProjectRepository;
+use App\Entity\Task;
+use App\Repository\TaskRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
+/**
+ * Require ROLE_ADMIN for *every* controller method in this class.
+ *
+ * @IsGranted("IS_AUTHENTICATED_FULLY")
+ */
 
 #[Route('/project')]
 class ProjectController extends AbstractController
@@ -29,6 +39,9 @@ class ProjectController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $project->setCreationdate(new \DateTime());
+            $project->setUserproject($this->getUser());
+            //$project->setStatut('0');
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($project);
             $entityManager->flush();
@@ -43,10 +56,18 @@ class ProjectController extends AbstractController
     }
 
     #[Route('/{id}', name: 'project_show', methods: ['GET'])]
-    public function show(Project $project): Response
+    public function show(Project $project, TaskRepository $taskRepository, $tasks = null): Response
     {
+        // $taskRepository = $this->getDoctrine()->getRepository(Task::class);
+        // $tasks = $taskRepository->findBy(
+        //     ['id' =>  $project],
+        // );
+        $tasks = $project->getTasks();
+        // dump($tasks);
+
         return $this->render('project/show.html.twig', [
             'project' => $project,
+            'tasks' => $tasks,
         ]);
     }
 

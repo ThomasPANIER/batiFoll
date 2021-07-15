@@ -1,17 +1,22 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Project index{% endblock %}
+
+{% block title %}Projets{% endblock %}
 
 {% block body %}
-    <h1>Project index</h1>
+    {% if app.user %}
+        <div class="mt-5 mb-5">
+            <h1>Bonjour {{ app.user.firstname }}, voici vos projets.<h1>
+        </div>
+    {% endif %}
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
+                <th>Nom</th>
                 <th>Description</th>
-                <th>Creationdate</th>
+                <th>Date de création</th>
                 <th>Deadline</th>
                 <th>Statut</th>
                 <th>actions</th>
@@ -25,19 +30,19 @@
                 <td>{{ project.description }}</td>
                 <td>{{ project.creationdate ? project.creationdate|date('Y-m-d') : '' }}</td>
                 <td>{{ project.deadline ? project.deadline|date('Y-m-d') : '' }}</td>
-                <td>{{ project.statut ? 'Yes' : 'No' }}</td>
+                <td>{{ project.statut ? 'Terminé' : 'En cours' }}</td>
                 <td>
-                    <a href="{{ path('project_show', {'id': project.id}) }}">show</a>
-                    <a href="{{ path('project_edit', {'id': project.id}) }}">edit</a>
+                    <a href="{{ path('project_show', {'id': project.id}) }}">Voir</a>
+                    {# <a href="{{ path('project_edit', {'id': project.id}) }}">edit</a> #}
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">no records found</td>
+                <td colspan="7">Pas de projet en cours</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('project_new') }}">Create new</a>
+    <a class="btn btn-dark" href="{{ path('project_new') }}">Nouveau projet</a>
 {% endblock %}
