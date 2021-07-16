@@ -26,8 +26,13 @@ class ProjectController extends AbstractController
     #[Route('/', name: 'project_index', methods: ['GET'])]
     public function index(ProjectRepository $projectRepository): Response
     {
+        $projectRepository = $this->getDoctrine()->getRepository(Project::class);
+        $projects = $projectRepository->findby(
+            ['userproject' => $this->getUser()],
+        );
+
         return $this->render('project/index.html.twig', [
-            'projects' => $projectRepository->findAll(),
+            'projects' => $projects,
         ]);
     }
 
@@ -55,20 +60,21 @@ class ProjectController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'project_show', methods: ['GET'])]
-    public function show(Project $project, TaskRepository $taskRepository, $tasks = null): Response
+    #[Route('/{id}', name: 'project_show', methods: ['GET'], requirements: ['id' => '\d+'])]
+    public function show(Project $project, int $id): Response
     {
         // $taskRepository = $this->getDoctrine()->getRepository(Task::class);
         // $tasks = $taskRepository->findBy(
         //     ['id' =>  $project],
         // );
-        $tasks = $project->getTasks();
-        // dump($tasks);
+        $tasks = $project->getTasks($id);
+        //dump($tasks);
 
         return $this->render('project/show.html.twig', [
             'project' => $project,
             'tasks' => $tasks,
         ]);
+    
     }
 
     #[Route('/{id}/edit', name: 'project_edit', methods: ['GET', 'POST'])]

@@ -1,52 +1,53 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Project{% endblock %}
+{% block title %}Projet{% endblock %}
 
 {% block body %}
-    <h1>Project</h1>
+    <div class="mt-5 mb-5">
+        <h1>Projet</h1>
+    </div>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ project.id }}</td>
-            </tr>
-            <tr>
-                <th>Name</th>
+                <th>Nom :</th>
                 <td>{{ project.name }}</td>
             </tr>
             <tr>
-                <th>Description</th>
+                <th>Description :</th>
                 <td>{{ project.description }}</td>
             </tr>
             <tr>
-                <th>Creationdate</th>
+                <th>Date de création :</th>
                 <td>{{ project.creationdate ? project.creationdate|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
-                <th>Deadline</th>
+                <th>Deadline :</th>
                 <td>{{ project.deadline ? project.deadline|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
-                <th>Statut</th>
+                <th>Statut :</th>
                 <td>{{ project.statut ? 'Terminé' : 'En cours' }}</td>
+            </tr>
+            <tr>
+                <th>Modification du projet:</th>
+                <td class="text-start">
+                    <a class="btn btn-dark " href="{{ path('project_edit', {'id': project.id}) }}">Modifier</a>
+                </td>
             </tr>
         </tbody>
     </table>
 
-    <a class="btn btn-dark " href="{{ path('project_edit', {'id': project.id}) }}">Modifier</a>
-
-    {{ include('project/_delete_form.html.twig') }}
-
-        <h1>Task index</h1>
-
+    <div class="mt-5 mb-5">
+        <h1>Liste des taches</h1>
+    </div>
+    
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
+                <th>Nom</th>
                 <th>Description</th>
-                <th>Creationdate</th>
+                <th>Date de création</th>
                 <th>Deadline</th>
                 <th>Statut</th>
                 <th>actions</th>
@@ -57,19 +58,23 @@
         {% if project.tasks is not empty %}
             {% for task in project.tasks %}
                 <tr>
-                    <td>{{ task.id }}</td>
                     <td>{{ task.name }}</td>
                     <td>{{ task.description }}</td>
                     <td>{{ task.creationdate ? task.creationdate|date('Y-m-d') : '' }}</td>
                     <td>{{ task.deadline ? task.deadline|date('Y-m-d') : '' }}</td>
-                    <td>{{ task.statut ? 'Yes' : 'No' }}</td>
+                    <td>{{ task.statut ? 'Terminée' : 'En cours' }}</td>
                     <td>
-                        {# <a href="{{ path('task_show', {'id': task.id}) }}">show</a> #}
-                        <a href="{{ path('task_edit', {'id': task.id}) }}">edit</a>
+                        <a href="{{ path('task_show', {'id': task.id}) }}">Voir</a>
+                        <a href="{{ path('task_edit', {'id': task.id}) }}">Modifier</a>
                         {# {{ include('task/_delete_form.html.twig') }} #}
                     </td>
                 </tr>
             {% endfor %}
+            <tr>
+                <td colspan="7">
+                    <a class="btn btn-dark " href="{{ path('task_new', {'id': project.id}) }}">Create new</a>
+                </td>
+            </tr>
         {% else %}
             <tr>
                 <td colspan="7">no records found</td>
@@ -78,8 +83,17 @@
         </tbody>
     </table>
 
-    <a class="btn btn-dark " href="{{ path('task_new', {'id': project.id}) }}">Create new</a>
-    <br>
+    <table class="table">
+        <tbody>
+            <tr>
+                <td class="text-center" colspan="7"></td>
+            </tr>
+            <tr>
+                <td class="text-center" colspan="7">{{ include('project/_delete_form.html.twig') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
     <a href="{{ path('project_index') }}">Retour à la liste</a>
 
 {% endblock %}

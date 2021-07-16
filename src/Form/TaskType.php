@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Task;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -12,12 +13,29 @@ class TaskType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-            ->add('description')
-            ->add('creationdate')
-            ->add('deadline')
-            ->add('statut')
-            ->add('taskproject')
+        ->add('name', null, [
+            'label' => 'Nom :'
+        ])
+        ->add('description', null, [
+            'label' => 'Description :'
+        ])
+        // ->add('creationdate', null, [
+        //     'label' => 'Date de création :'
+        // ])
+        ->add('deadline', null, [
+            'label' => 'Deadline :'
+        ])
+        ->add('statut', ChoiceType::class, [
+            'placeholder' => 'Choisissez un statut',
+            'choices' => [
+                'Tache en cours' => false,
+                'Tache terminée' => true
+            ],
+            'multiple' => false,
+            'empty_data' => '0',
+            'required' => false
+        ])
+        // ->add('taskproject')
         ;
     }
 

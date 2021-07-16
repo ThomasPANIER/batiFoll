@@ -1,20 +1,36 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello FrontBatiFollController!{% endblock %}
+{% block title %}Projet{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <h1>Projet</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/Thomas/Desktop/site/lab/batiFoll/src/Controller/FrontBatiFollController.php'|file_link(0) }}">src/Controller/FrontBatiFollController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/Thomas/Desktop/site/lab/batiFoll/templates/front_bati_foll/index.html.twig'|file_link(0) }}">templates/front_bati_foll/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Responsable</th>
+                <th>Nom du projet</th>
+                <th>Description</th>
+                <th>Date de création</th>
+                <th>Deadline</th>
+                <th>Statut</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for project in projects %}
+            <tr>
+                <td>{{ project.userproject.firstname }}</td>
+                <td>{{ project.name }}</td>
+                <td>{{ project.description }}</td>
+                <td>{{ project.creationdate ? project.creationdate|date('Y-m-d') : '' }}</td>
+                <td>{{ project.deadline ? project.deadline|date('Y-m-d') : '' }}</td>
+                <td>{{ project.statut ? 'Terminé' : 'En cours' }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">Pas de projet en cours</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
