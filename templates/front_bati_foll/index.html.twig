@@ -24,7 +24,11 @@
                 <td>{{ project.description }}</td>
                 <td>{{ project.creationdate ? project.creationdate|date('Y-m-d') : '' }}</td>
                 <td>{{ project.deadline ? project.deadline|date('Y-m-d') : '' }}</td>
-                <td>{{ project.statut ? 'Terminé' : 'En cours' }}</td>
+                {% if project.statut %}
+                    <td class="text-success">{{ project.statut ? 'Terminé' : 'En cours' }}</td>
+                {% else %}
+                    <td>{{ project.statut ? 'Terminé' : 'En cours' }}</td>
+                {% endif %}
             </tr>
         {% else %}
             <tr>

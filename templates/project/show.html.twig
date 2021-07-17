@@ -62,7 +62,11 @@
                     <td>{{ task.description }}</td>
                     <td>{{ task.creationdate ? task.creationdate|date('Y-m-d') : '' }}</td>
                     <td>{{ task.deadline ? task.deadline|date('Y-m-d') : '' }}</td>
-                    <td>{{ task.statut ? 'Terminée' : 'En cours' }}</td>
+                    {% if task.statut %}
+                        <td class="text-success">{{ task.statut ? 'Terminé' : 'En cours' }}</td>
+                    {% else %}
+                        <td>{{ task.statut ? 'Terminé' : 'En cours' }}</td>
+                    {% endif %}
                     <td>
                         <a href="{{ path('task_show', {'id': task.id}) }}">Voir</a>
                         <a href="{{ path('task_edit', {'id': task.id}) }}">Modifier</a>
