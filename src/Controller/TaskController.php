@@ -43,7 +43,7 @@ class TaskController extends AbstractController
             $entityManager->persist($task);
             $entityManager->flush();
 
-            return $this->redirectToRoute('task_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('project_show', ['id' => $task->getTaskproject($project)->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('task/new.html.twig', [
@@ -53,23 +53,28 @@ class TaskController extends AbstractController
     }
 
     #[Route('/{id}', name: 'task_show', methods: ['GET'])]
-    public function show(Task $task): Response
+    public function show(Task $task, int $id): Response
     {
+        $project = $task->getTaskproject($id);
+
         return $this->render('task/show.html.twig', [
             'task' => $task,
+            'project' => $project,
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'task_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Task $task): Response
+    #[Route('/{id}/edit', name: 'task_edit', methods: ['GET', 'POST'], requirements: ['id' => '\d+'])]
+    public function edit(Request $request, Task $task, int $id=1, ProjectRepository $projectRepository): Response
     {
         $form = $this->createForm(TaskType::class, $task);
         $form->handleRequest($request);
 
+        $project = $projectRepository->find($id);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('task_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('project_show', ['id' => $task->getTaskproject($project)->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('task/edit.html.twig', [
@@ -78,15 +83,17 @@ class TaskController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'task_delete', methods: ['POST'])]
-    public function delete(Request $request, Task $task): Response
+    #[Route('/{id}', name: 'task_delete', methods: ['POST'], requirements: ['id' => '\d+'])]
+    public function delete(Request $request, Task $task, int $id=1, ProjectRepository $projectRepository): Response
     {
+        $project = $projectRepository->find($id);
+        
         if ($this->isCsrfTokenValid('delete'.$task->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($task);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('task_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('project_show', ['id' => $task->getTaskproject($project)->getId()], Response::HTTP_SEE_OTHER);
     }
 }

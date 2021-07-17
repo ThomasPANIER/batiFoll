@@ -41,8 +41,11 @@
                 <td colspan="7">Pas de projet en cours</td>
             </tr>
         {% endfor %}
+            <tr>
+                <td colspan="7">
+                    <a class="btn btn-dark" href="{{ path('project_new') }}">Nouveau projet</a>
+                </td>
+            </tr>
         </tbody>
     </table>
-
-    <a class="btn btn-dark" href="{{ path('project_new') }}">Nouveau projet</a>
 {% endblock %}

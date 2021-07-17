@@ -32,7 +32,7 @@
             <tr>
                 <th>Modification du projet:</th>
                 <td class="text-start">
-                    <a class="btn btn-dark " href="{{ path('project_edit', {'id': project.id}) }}">Modifier</a>
+                    <a class="btn btn-dark" href="{{ path('project_edit', {'id': project.id}) }}">Modifier</a>
                 </td>
             </tr>
         </tbody>
@@ -70,16 +70,16 @@
                     </td>
                 </tr>
             {% endfor %}
-            <tr>
-                <td colspan="7">
-                    <a class="btn btn-dark " href="{{ path('task_new', {'id': project.id}) }}">Create new</a>
-                </td>
-            </tr>
         {% else %}
             <tr>
-                <td colspan="7">no records found</td>
+                <td colspan="7">Pas de tache en cours</td>
             </tr>
         {% endif %}
+            <tr>
+                <td colspan="7">
+                    <a class="btn btn-dark " href="{{ path('task_new', {'id': project.id}) }}">Créer nouvelle tache</a>
+                </td>
+            </tr>
         </tbody>
     </table>
 
@@ -95,5 +95,4 @@
     </table>
 
     <a href="{{ path('project_index') }}">Retour à la liste</a>
-
 {% endblock %}
