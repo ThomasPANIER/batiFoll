@@ -27,9 +27,8 @@ class ProjectController extends AbstractController
     public function index(ProjectRepository $projectRepository): Response
     {
         $projectRepository = $this->getDoctrine()->getRepository(Project::class);
-        $projects = $projectRepository->findby(
-            ['userproject' => $this->getUser()],
-        );
+        
+        $projects = $projectRepository->getUserProjects($this->getUser());
 
         return $this->render('project/index.html.twig', [
             'projects' => $projects,

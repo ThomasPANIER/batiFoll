@@ -36,6 +36,17 @@ class ProjectRepository extends ServiceEntityRepository
     }
     */
 
+    public function getUserProjects($id) {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.userproject = :id')
+            ->setParameter('id', $id)
+            ->orderby('p.statut', 'ASC')
+            ->addOrderBy('p.deadline', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     /*
     public function findOneBySomeField($value): ?Project
     {
