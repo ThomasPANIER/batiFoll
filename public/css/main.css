@@ -13,3 +13,15 @@ tr:hover {
     margin: auto;
     padding: auto;
 }
+
+.zoom-in {
+    cursor: -webkit-zoom-in; cursor: zoom-in;
+}
+
+#happy {
+    cursor: url("WolfOfFire.cur"), pointer;
+}
+
+#sad {
+    cursor: url("Pirate.cur"), pointer;
+}

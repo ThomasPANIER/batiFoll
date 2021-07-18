@@ -33,7 +33,7 @@
                     <td class="text-center">{{ project.statut ? 'Terminé' : 'En cours' }}</td>
                 {% endif %}
                 <td class="text-center">
-                    <a href="{{ path('project_show', {'id': project.id}) }}">Voir</a>
+                    <a class="zoom-in" href="{{ path('project_show', {'id': project.id}) }}">Voir</a>
                 </td>
             </tr>
         {% else %}
