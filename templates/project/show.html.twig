@@ -30,7 +30,7 @@
                 <td>{{ project.statut ? 'Terminé' : 'En cours' }}</td>
             </tr>
             <tr>
-                <th>Modification du projet:</th>
+                <th>Modification du projet :</th>
                 <td class="text-start">
                     <a class="btn btn-dark" href="{{ path('project_edit', {'id': project.id}) }}">Modifier</a>
                 </td>
@@ -45,12 +45,13 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Nom</th>
-                <th>Description</th>
-                <th>Date de création</th>
-                <th>Deadline</th>
-                <th>Statut</th>
-                <th>actions</th>
+                <th><button class="btn btn-white text-dark fw-bold" onclick="tri();" title="Trier">Nom</button></th>
+                <th><button class="btn btn-white text-dark fw-bold" onclick="tri();" title="Trier">Description</button></th>
+                <th><button class="btn btn-white text-dark fw-bold" onclick="tri();" title="Trier">Créé le</button></th>
+                <th><button class="btn btn-white text-dark fw-bold" onclick="tri();" title="Trier">Deadline</button></th>
+                <th><button class="btn btn-white text-dark fw-bold" onclick="tri();" title="Trier">Statut</button></th>
+                <th><button class="btn btn-white text-dark fw-bold">Actions</button></th>
+                
             </tr>
         </thead>
         <tbody>
@@ -69,6 +70,7 @@
                     {% endif %}
                     <td>
                         <a href="{{ path('task_show', {'id': task.id}) }}">Voir</a>
+                         | 
                         <a href="{{ path('task_edit', {'id': task.id}) }}">Modifier</a>
                         {# {{ include('task/_delete_form.html.twig') }} #}
                     </td>

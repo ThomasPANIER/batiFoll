@@ -3,10 +3,8 @@ tr:hover {
     background-color: rgb(34, 210, 241);
 }
 
-workDiv {
-    height: 5%;
+#working {
     width: 100%;
-    position: absolute;
     background-color: black;
     z-index: 1000;
     opacity: 75%;
