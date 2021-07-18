@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier tache{% endblock %}
+
+{% block body %}
+    <div class="mt-5 mb-5">
+        <h1>Modifier la tache</h1>
+    </div>
+
+    {{ include('task/_form.html.twig', {'button_label': 'Valider'}) }}
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Projet{% endblock %}
+
+{% block body %}
+    <div class="mt-5 mb-5">
+        <h1>Projet</h1>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th><button class="btn btn-white text-dark fw-bold" onclick="tri();" title="Trier">Responsable</button></th>
+                <th><button class="btn btn-white text-dark fw-bold" onclick="tri();" title="Trier">Projet</button></th>
+                <th><button class="btn btn-white text-dark fw-bold" onclick="tri();" title="Trier">Description</button></th>
+                <th><button class="btn btn-white text-dark fw-bold" onclick="tri();" title="Trier">Créé le</button></th>
+                <th><button class="btn btn-white text-dark fw-bold" onclick="tri();" title="Trier">Deadline</button></th>
+                <th><button class="btn btn-white text-dark fw-bold" onclick="tri();" title="Trier">Statut</button></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for project in projects %}
+            <tr>
+                <td class="text-center">{{ project.userproject.firstname }}</td>
+                <td class="text-center">{{ project.name }}</td>
+                <td class="">{{ project.description }}</td>
+                <td class="text-center">{{ project.creationdate ? project.creationdate|date('Y-m-d') : '' }}</td>
+                <td class="text-center">{{ project.deadline ? project.deadline|date('Y-m-d') : '' }}</td>
+                {% if project.statut %}
+                    <td class="text-center text-success">{{ project.statut ? 'Terminé' : 'En cours' }}</td>
+                {% else %}
+                    <td class="text-center">{{ project.statut ? 'Terminé' : 'En cours' }}</td>
+                {% endif %}
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">Pas de projet en cours</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

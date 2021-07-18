@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle tache{% endblock %}
+
+{% block body %}
+    <h1 class="mt-5 mb-5">Créer une nouvelle tache</h1>
+    <div class="mb-5">
+        {{ include('task/_form.html.twig') }}
+    </div>
+{% endblock %}

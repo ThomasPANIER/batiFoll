@@ -1,0 +1,102 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Projet{% endblock %}
+
+{% block body %}
+    <div class="mt-5 mb-5">
+        <h1>Projet</h1>
+    </div>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Nom :</th>
+                <td>{{ project.name }}</td>
+            </tr>
+            <tr>
+                <th>Description :</th>
+                <td>{{ project.description }}</td>
+            </tr>
+            <tr>
+                <th>Date de création :</th>
+                <td>{{ project.creationdate ? project.creationdate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Deadline :</th>
+                <td>{{ project.deadline ? project.deadline|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Statut :</th>
+                <td>{{ project.statut ? 'Terminé' : 'En cours' }}</td>
+            </tr>
+            <tr>
+                <th>Modification du projet :</th>
+                <td class="text-start">
+                    <a class="btn btn-dark" href="{{ path('project_edit', {'id': project.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="mt-5 mb-5">
+        <h1>Liste des taches</h1>
+    </div>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th><button class="btn btn-white text-dark fw-bold" onclick="tri();" title="Trier">Nom</button></th>
+                <th><button class="btn btn-white text-dark fw-bold" onclick="tri();" title="Trier">Description</button></th>
+                <th><button class="btn btn-white text-dark fw-bold" onclick="tri();" title="Trier">Créé le</button></th>
+                <th><button class="btn btn-white text-dark fw-bold" onclick="tri();" title="Trier">Deadline</button></th>
+                <th><button class="btn btn-white text-dark fw-bold" onclick="tri();" title="Trier">Statut</button></th>
+                <th><button class="btn btn-white text-dark fw-bold">Actions</button></th>
+            </tr>
+        </thead>
+        <tbody>
+
+        {% if project.tasks is not empty %}
+            {% for task in project.tasks %}
+                <tr>
+                    <td>{{ task.name }}</td>
+                    <td>{{ task.description }}</td>
+                    <td>{{ task.creationdate ? task.creationdate|date('Y-m-d') : '' }}</td>
+                    <td>{{ task.deadline ? task.deadline|date('Y-m-d') : '' }}</td>
+                    {% if task.statut %}
+                        <td class="text-success">{{ task.statut ? 'Terminé' : 'En cours' }}</td>
+                    {% else %}
+                        <td>{{ task.statut ? 'Terminé' : 'En cours' }}</td>
+                    {% endif %}
+                    <td>
+                        <a href="{{ path('task_show', {'id': task.id}) }}">Voir</a>
+                         | 
+                        <a href="{{ path('task_edit', {'id': task.id}) }}">Modifier</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="7">Pas de tache en cours</td>
+            </tr>
+        {% endif %}
+            <tr>
+                <td colspan="7">
+                    <a class="btn btn-dark " href="{{ path('task_new', {'id': project.id}) }}">Créer nouvelle tache</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <td class="text-center" colspan="7"></td>
+            </tr>
+            <tr>
+                <td class="text-center" colspan="7">{{ include('project/_delete_form.html.twig') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('project_index') }}">Retour à la liste</a>
+{% endblock %}

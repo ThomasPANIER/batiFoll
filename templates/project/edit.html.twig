@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier projet{% endblock %}
+
+{% block body %}
+    <h1 class="mt-5 mb-5">Modifier le projet</h1>
+    <div class="mb-5">
+        {{ include('project/_form.html.twig', {'button_label': 'Valider'}) }}
+    </div>
+{% endblock %}

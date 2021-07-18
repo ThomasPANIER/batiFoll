@@ -1,0 +1,15 @@
+
+tr:hover {
+    background-color: rgb(34, 210, 241);
+}
+
+#working {
+    width: 100%;
+    background-color: black;
+    z-index: 1000;
+    opacity: 75%;
+    color: white;
+    text-align:center;
+    margin: auto;
+    padding: auto;
+}
