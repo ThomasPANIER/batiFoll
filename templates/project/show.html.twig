@@ -68,7 +68,7 @@
                         <td>{{ task.statut ? 'Terminé' : 'En cours' }}</td>
                     {% endif %}
                     <td>
-                        <a href="{{ path('task_show', {'id': task.id}) }}">Voir</a>
+                        <a class="zoom-in" href="{{ path('task_show', {'id': task.id}) }}">Voir</a>
                          | 
                         <a href="{{ path('task_edit', {'id': task.id}) }}">Modifier</a>
                     </td>
