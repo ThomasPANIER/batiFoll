@@ -51,7 +51,6 @@
                 <th><button class="btn btn-white text-dark fw-bold" onclick="tri();" title="Trier">Deadline</button></th>
                 <th><button class="btn btn-white text-dark fw-bold" onclick="tri();" title="Trier">Statut</button></th>
                 <th><button class="btn btn-white text-dark fw-bold">Actions</button></th>
-                
             </tr>
         </thead>
         <tbody>
@@ -72,7 +71,6 @@
                         <a href="{{ path('task_show', {'id': task.id}) }}">Voir</a>
                          | 
                         <a href="{{ path('task_edit', {'id': task.id}) }}">Modifier</a>
-                        {# {{ include('task/_delete_form.html.twig') }} #}
                     </td>
                 </tr>
             {% endfor %}

@@ -5,9 +5,7 @@ namespace App\Controller;
 use App\Entity\Task;
 use App\Form\TaskType;
 use App\Repository\TaskRepository;
-use App\Entity\Project;
 use App\Repository\ProjectRepository;
-use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,17 +27,13 @@ class TaskController extends AbstractController
     {
         $task = new Task();
         $project = $projectRepository->find($id);
-        
         $form = $this->createForm(TaskType::class, $task);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $task->setCreationdate(new \DateTime());
             $task->setTaskproject($project);
-            
-            dump($task);
             $entityManager = $this->getDoctrine()->getManager();
-            
             $entityManager->persist($task);
             $entityManager->flush();
 
@@ -68,7 +62,6 @@ class TaskController extends AbstractController
     {
         $form = $this->createForm(TaskType::class, $task);
         $form->handleRequest($request);
-
         $project = $projectRepository->find($id);
 
         if ($form->isSubmitted() && $form->isValid()) {

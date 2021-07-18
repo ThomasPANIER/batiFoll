@@ -1,6 +1,5 @@
 {% extends 'base.html.twig' %}
 
-
 {% block title %}Projets{% endblock %}
 
 {% block body %}
@@ -13,7 +12,6 @@
     <table class="table">
         <thead>
             <tr>
-                
                 <th><button class="btn btn-white text-dark fw-bold" onclick="tri();" title="Trier">Nom</button></th>
                 <th><button class="btn btn-white text-dark fw-bold" onclick="tri();" title="Trier">Description</button></th>
                 <th><button class="btn btn-white text-dark fw-bold" onclick="tri();" title="Trier">Créé le</button></th>
@@ -36,7 +34,6 @@
                 {% endif %}
                 <td class="text-center">
                     <a href="{{ path('project_show', {'id': project.id}) }}">Voir</a>
-                    {# <a href="{{ path('project_edit', {'id': project.id}) }}">edit</a> #}
                 </td>
             </tr>
         {% else %}

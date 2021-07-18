@@ -5,8 +5,6 @@ namespace App\Controller;
 use App\Entity\Project;
 use App\Form\ProjectType;
 use App\Repository\ProjectRepository;
-use App\Entity\Task;
-use App\Repository\TaskRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,7 +43,6 @@ class ProjectController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $project->setCreationdate(new \DateTime());
             $project->setUserproject($this->getUser());
-            //$project->setStatut('0');
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($project);
             $entityManager->flush();
@@ -62,25 +59,18 @@ class ProjectController extends AbstractController
     #[Route('/{id}', name: 'project_show', methods: ['GET'], requirements: ['id' => '\d+'])]
     public function show(Project $project, int $id): Response
     {
-        // $taskRepository = $this->getDoctrine()->getRepository(Task::class);
-        // $tasks = $taskRepository->findBy(
-        //     ['id' =>  $project],
-        // );
         $tasks = $project->getTasks($id);
-        //dump($tasks);
 
         return $this->render('project/show.html.twig', [
             'project' => $project,
             'tasks' => $tasks,
         ]);
-    
     }
 
     #[Route('/{id}/edit', name: 'project_edit', methods: ['GET', 'POST'], requirements: ['id' => '\d+'])]
     public function edit(Request $request, Project $project, int $id=1, ProjectRepository $projectRepository): Response
     {
         $project = $projectRepository->find($id);
-
         $form = $this->createForm(ProjectType::class, $project);
         $form->handleRequest($request);
 
